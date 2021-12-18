@@ -1,0 +1,26 @@
+{
+  "name": "fso2021part13",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreibesleaga/fso2021part13.git"
+  },
+  "author": "Andrei Nicolae Besleaga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreibesleaga/fso2021part13/issues"
+  },
+  "homepage": "https://github.com/andreibesleaga/fso2021part13#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1",
+    "sequelize": "^6.12.0"
+  }
+}
