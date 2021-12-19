@@ -6,17 +6,23 @@ require('express-async-errors')
 const { PORT } = require('./util/config')
 const { connectToDatabase } = require('./util/db')
 
+const middleware = require('./util/middleware')
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
-const middleware = require('./util/middleware')
+const logoutRouter = require('./controllers/logout')
+const readingListsRouter = require('./controllers/readinglists')
 
 app.use(express.json())
 
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/logout', logoutRouter)
+app.use('/api/readinglists', readingListsRouter)
+
 app.use(middleware.unknownEndpoint)
+app.use(middleware.tokenExtractor)
 
 const start = async () => {
   await connectToDatabase()

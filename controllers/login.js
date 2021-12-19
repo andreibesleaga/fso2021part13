@@ -9,7 +9,8 @@ router.post('/', async (request, response) => {
 
   const user = await User.findOne({
     where: {
-      username: body.username
+      username: body.username,
+      enabled: true
     }
   })
 
@@ -26,6 +27,9 @@ const passwordCorrect = body.password === 'secret'
   }
 
   const token = jwt.sign(userForToken, SECRET)
+
+  user.token = token
+  await user.save()
 
   response
     .status(200)

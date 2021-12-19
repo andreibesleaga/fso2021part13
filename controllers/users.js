@@ -1,8 +1,9 @@
 const router = require('express').Router()
+const { tokenExtractor } = require('../util/middleware')
 
-const { User, Blog } = require('../models')
+const { User, Blog, ReadingList } = require('../models')
 
-router.get('/', async (req, res) => {
+router.get('/', tokenExtractor, async (req, res) => {
   const users = await User.findAll({
     include: {
       model: Blog,
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
   res.json(users)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', tokenExtractor, async (req, res) => {
   try {
     const user = await User.create(req.body)
     res.json(user)
@@ -21,8 +22,47 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.get('/:id', async (req, res) => {
-  const user = await User.findByPk(req.params.id)
+router.get('/:id', tokenExtractor, async (req, res) => {
+  
+  let where = {}
+
+  if(req.query.read && req.query.read==='true') {
+    where = {
+      read: true
+    }
+  } else if (req.query.read && req.query.read==='false') {
+    where = {
+      read: false
+    }
+  }
+
+  const user = await User.findByPk( req.params.id , {
+    attributes: { exclude: [''] } ,
+    include:[{
+        model: Blog,
+        attributes: { exclude: ['userId'] }
+      },
+      {
+        model: Blog,
+        as: 'read_blog',
+        attributes: { exclude: ['userId']},
+        through: {
+          attributes: []
+        },
+        include: {
+          model: User,
+          attributes: ['name']
+        },
+      },
+      {        
+        model: ReadingList,
+        as: 'reading_lists',
+        attributes: ['read', 'id'],
+        where
+      }
+    ]
+  })
+
   if (user) {
     res.json(user)
   } else {
@@ -30,7 +70,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.put('/:username', async (req, res) => {
+router.put('/:username', tokenExtractor, async (req, res) => {
     const user = await User.findOne({ where: { username: req.params.username } })
     if (user) {
         await user.update(req.body)

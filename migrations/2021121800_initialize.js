@@ -32,7 +32,7 @@ module.exports = {
           },          
     })
     await queryInterface.createTable('users', {
-        id: {
+          id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -51,6 +51,14 @@ module.exports = {
             type: DataTypes.STRING,
             allowNull: false
           },
+          enabled: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+          },
+          token: {
+            type: DataTypes.STRING,
+            defaultValue: ''
+          },        
           created_at: {
             type: DataTypes.DATE
           },
