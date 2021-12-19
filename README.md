@@ -1,5 +1,5 @@
 # Full Stack Open 2021
-Part 13 - SQL
+Part 13 - SQL - Open relational databases
 
 Node JS - Express Server - with PostgreSQL
 
