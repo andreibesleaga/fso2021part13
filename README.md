@@ -1,6 +1,9 @@
 # Full Stack Open 2021
 Part 13 - SQL
 
+Node JS - Express Server - with PostgreSQL
+
+
 - cli.js - run only for first part of tasks
 - commands.sql - the first tasks as sql
 
